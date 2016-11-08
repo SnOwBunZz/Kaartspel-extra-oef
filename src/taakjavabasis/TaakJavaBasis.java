@@ -1,10 +1,6 @@
 package taakjavabasis;
 
 import java.util.Scanner;
-import taakjavabasis.logic.Card;
-import taakjavabasis.logic.Deck;
-import taakjavabasis.logic.GameLogic;
-import taakjavabasis.logic.Player;
 import taakjavabasis.ui.UI;
 
 public class TaakJavaBasis {

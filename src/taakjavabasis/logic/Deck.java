@@ -17,7 +17,14 @@ public class Deck {
     }
 
     /*
-     Creates a 52 card deck twice
+    Returns the cards in the deck.
+     */
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    /*
+    Creates a 52 card deck twice
      */
     public void populateDeck() {
         for (int i = 0; i < 2; i++) {
@@ -27,13 +34,6 @@ public class Deck {
                 }
             }
         }
-    }
-
-    /*
-     Returns the cards in the deck.
-     */
-    public List<Card> getCards() {
-        return cards;
     }
 
     /*

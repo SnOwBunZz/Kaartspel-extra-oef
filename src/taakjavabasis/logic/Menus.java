@@ -12,6 +12,24 @@ public class Menus {
         this.reader = reader;
     }
 
+    public Card gameMenu(Player player) {
+        System.out.print("[1] Draw card [2] Forfeit"
+                + "\nPlayer " + player.getName() + ": ");
+        int input = Integer.parseInt(reader.nextLine());
+        
+        Card card = new Card(99, 99);
+        
+        switch (input) {
+            case 1:
+                card = player.drawCard();
+                return card;
+            case 2:
+                return card;
+        }
+        
+        return card;
+    }
+
     public void mainMenu() {
         System.out.println("MAIN MENU"
                 + "\n--------"
@@ -19,9 +37,9 @@ public class Menus {
                 + "\n[2] Quit game");
 
         /*
-         Asks for input, only one or two accepted
-         Keep in mind that when you add menu options to adjust this!
-         */
+        Asks for input, only one or two accepted
+        Keep in mind that when you add menu options to adjust this!
+        */
         int input = 0;
         while (true) {
             try {
@@ -45,23 +63,5 @@ public class Menus {
             case 2:
                 break;
         }
-    }
-
-    public Card gameMenu(Player player) {
-        System.out.print("[1] Draw card [2] Forfeit"
-                + "\nPlayer " + player.getName() + ": ");
-        int input = Integer.parseInt(reader.nextLine());
-
-        Card card = new Card(99, 99);
-
-        switch (input) {
-            case 1:
-                card = player.drawCard();
-                return card;
-            case 2:
-                return card;
-        }
-
-        return card;
     }
 }

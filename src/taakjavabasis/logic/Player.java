@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Player {
 
-    private String name;
-    private int score;
     private boolean cpu;
     private boolean hasForfeited;
+    private String name;
     private List<Card> playHand;
+    private int score;
     private List<Card> wonHand;
 
     /**
@@ -24,17 +24,19 @@ public class Player {
     }
 
     /**
-     returns the name
+    add a card to the playing hand
      */
-    public String getName() {
-        return name;
+    public void addCard(Card card) {
+        playHand.add(card);
     }
 
     /**
-     Returns score.
+    Draws a card and removes it from the player's hand.
      */
-    public int getScore() {
-        return score;
+    public Card drawCard() {
+        Card card = playHand.get(playHand.size() - 1);
+        playHand.remove(playHand.size() - 1);
+        return card;
     }
 
     /**
@@ -52,54 +54,56 @@ public class Player {
     }
 
     /**
-     Sets hasForfeited to true if player forfeits
+    returns the name
      */
-    public void setHasForfeited() {
-        hasForfeited = true;
+    public String getName() {
+        return name;
     }
 
     /**
-     add a card to the playing hand
+    Returns score.
      */
-    public void addCard(Card card) {
-        playHand.add(card);
+    public int getScore() {
+        return score;
     }
 
     /**
-     Draws a card and removes it from the player's hand.
-     */
-    public Card drawCard() {
-        Card card = playHand.get(playHand.size() - 1);
-        playHand.remove(playHand.size() - 1);
-        return card;
-    }
-
-    /**
-     Increases the player's score if he won the round.
-     */
-    public void wonRound(List<Card> wonCards) {
-        wonHand.addAll(wonCards);
-        score++;
-        System.out.println(name + " wins this round!");
-    }
-
-    /**
-     Debugging/testing use.
+    Debugging/testing use.
      */
     public int handSize() {
         return playHand.size();
     }
 
     /**
-     Debugging/testing use.
+    Debugging/testing use.
      */
     public void printHand() {
         for (Card card : playHand) {
             System.out.println(card.getCardInfo());
         }
     }
-    
+
+    /**
+    Sets hasForfeited to true if player forfeits
+     */
+    public void setHasForfeited() {
+        hasForfeited = true;
+    }
+
+    /**
+     *
+     * @return the size of the hand that keeps the won cards.
+     */
     public int wonHandSize() {
         return wonHand.size();
+    }
+    
+    /**
+    Increases the player's score if he won the round.
+     */
+    public void wonRound(List<Card> wonCards) {
+        wonHand.addAll(wonCards);
+        score++;
+        System.out.println(name + " wins this round!");
     }
 }

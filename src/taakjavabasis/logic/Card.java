@@ -18,28 +18,7 @@ public class Card implements Comparable<Card> {
     }
 
     /*
-     suit getter
-     */
-    public int getSuit() {
-        return suit;
-    }
-
-    /*
-     value getter
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /*
-     returns card suit and value in a readable manner
-     */
-    public String getCardInfo() {
-        return VALUES[value] + " of " + SUITS[suit];
-    }
-
-    /*
-     compares cards
+    compares cards
      */
     @Override
     public int compareTo(Card card) {
@@ -50,6 +29,27 @@ public class Card implements Comparable<Card> {
         } else {
             return -1;
         }
+    }
+
+    /*
+    returns card suit and value in a readable manner
+     */
+    public String getCardInfo() {
+        return VALUES[value] + " of " + SUITS[suit];
+    }
+
+    /*
+    suit getter
+     */
+    public int getSuit() {
+        return suit;
+    }
+
+    /*
+    value getter
+     */
+    public int getValue() {
+        return value;
     }
 
 }
