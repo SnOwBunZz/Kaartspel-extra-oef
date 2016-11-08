@@ -1,5 +1,7 @@
 package taakjavabasis.logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameLogic {
@@ -26,8 +28,8 @@ public class GameLogic {
             winner = "It's a tie!";
         }
         System.out.println("\nThe winner is: " + winner + "!\n"
-                + player1.getName() + ": " + player1.getScore() + " points.\n"
-                + player2.getName() + ": " + player2.getScore() + " points.");
+                + player1.getName() + ": " + player1.wonHandSize() + " cards.\n"
+                + player2.getName() + ": " + player2.wonHandSize() + " cards.\n");
     }
 
     public int compareTo(Card card1, Card card2) {
@@ -40,15 +42,37 @@ public class GameLogic {
         }
     }
 
-    public void roundWinner(Card card1, Card card2) {
+    public List<Card> roundWinner(Card card1, Card card2) {
+        List<Card> wonCards = new ArrayList();
+        wonCards.add(card1);
+        wonCards.add(card2);
         if (compareTo(card1, card2) == 1) {
-            System.out.println(player1.getName() + " is this round's winner!");
-            player1.wonRound();
+            player1.wonRound(wonCards);
         } else if (compareTo(card1, card2) == -1) {
-            System.out.println(player2.getName() + " is this round's winner!");
-            player2.wonRound();
+            player2.wonRound(wonCards);
         } else {
             System.out.println("It's a tie!");
+            roundTie(wonCards);
+        }
+        
+        return null;
+    }
+    
+    public void roundTie(List<Card> cards) {
+        Card p1 = player1.drawCard();
+        Card p2 = player2.drawCard();
+        cards.add(p1);
+        cards.add(p2);
+        System.out.println(player1.getName() + ": " + p1.getCardInfo());
+        System.out.println(player2.getName() + ": " + p2.getCardInfo());
+        
+        if (compareTo(p1,p2) == 1) {
+            player1.wonRound(cards);
+        } else if (compareTo(p1,p2) == -1) {
+            player2.wonRound(cards);
+        } else {
+            System.out.println("It's another tie!");
+            roundTie(cards);
         }
     }
 
@@ -118,6 +142,7 @@ public class GameLogic {
                 if (!players[i].getCPU()) {
                     Card card = menu.gameMenu(players[i]);
                     if (card.getSuit() == 99) {
+                        players[i].setHasForfeited();
                         break gameLoop;
                     } else {
                         drawnCards[i] = card;
@@ -134,7 +159,8 @@ public class GameLogic {
 
             roundWinner(drawnCards[0], drawnCards[1]);
         }
-
+        
         gameWinner();
+        menu.mainMenu();
     }
 }
