@@ -1,45 +1,71 @@
 package taakjavabasis.logic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
+/**
+ *
+ * @author Michiel Thomassen
+ */
 public class Deck {
 
-    private List<Card> cards;
+    private Card[] cards;
 
-    /*
-     Constructor for Deck
-     Creates an empty List containing cards
+    /**
+     * Deck creator
      */
     public Deck() {
-        this.cards = new ArrayList();
+        this.cards = new Card[104];
     }
 
-    /*
-    Returns the cards in the deck.
+    /**
+     * returns all cards currently in this object
+     *
+     * @return the array of cards that this object holds
      */
-    public List<Card> getCards() {
+    public Card[] getCards() {
         return cards;
     }
 
-    /*
-    Creates a 52 card deck twice
+    /**
+     * Makes sure that each and every possible card gets added to the deck
+     * Considering the requirements require 2 decks, this is done twice (the i
+     * var in the first for-loop) The l-var makes sure that each cell will be
+     * used once.
      */
     public void populateDeck() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0, l = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 13; k++) {
-                    cards.add(new Card(j, k));
+                    cards[l] = new Card(j, k);
+                    l++;
                 }
             }
         }
+
     }
 
-    /*
-     Shuffles the cards.
+    /**
+     * debugging use
      */
+    public void printCards() {
+        for (Card card : cards) {
+            System.out.println(card.getCardInfo());
+        }
+    }
+
+    /**
+     * Shuffles cards. SOURCE:
+     * http://www.programcreek.com/2012/02/java-method-to-shuffle-an-int-array-with-random-order/
+     */
+    // I think I understand this..
     public void shuffleCards() {
-        Collections.shuffle(cards);
+        Random rgen = new Random();  // Random number generator
+
+        for (int i = 0; i < cards.length; i++) {
+            int randomPosition = rgen.nextInt(cards.length);
+            Card temp = cards[i];
+            cards[i] = cards[randomPosition];
+            cards[randomPosition] = temp;
+        }
     }
 }
