@@ -15,10 +15,6 @@ public class UI {
     }
 
     public void run() {
-        mainMenu();
-    }
-
-    private void mainMenu() {
         menu.mainMenu();
     }
 }

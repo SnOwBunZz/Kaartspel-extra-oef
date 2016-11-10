@@ -51,6 +51,13 @@ public class GameLogic {
         players[1] = player2;
     }
 
+    public void addPlayers(Player p1, Player p2) {
+        players[0] = p1;
+        player1 = p1;
+        players[1] = p2;
+        player2 = p2;
+    }
+
     public int compareTo(Card card1, Card card2) {
         if (card1.getValue() == card2.getValue()) {
             return 0;
@@ -90,16 +97,16 @@ public class GameLogic {
         gameWinner();
         menu.mainMenu();
     }
-    
+
     public void gameWinner() {
         String winner = "";
         if (player1.getHasForfeited()) {
             winner = player2.getName();
         } else if (player2.getHasForfeited()) {
             winner = player1.getName();
-        } else if (player1.getScore() > player2.getScore()) {
+        } else if (player1.wonHandSize() > player2.wonHandSize()) {
             winner = player1.getName();
-        } else if (player1.getScore() < player2.getScore()) {
+        } else if (player1.wonHandSize() < player2.wonHandSize()) {
             winner = player2.getName();
         } else {
             winner = "It's a tie!";
@@ -116,28 +123,41 @@ public class GameLogic {
     public Player getPlayer2() {
         return player2;
     }
-    
+
     public void preparation() {
         Deck deck = new Deck();
         deck.populateDeck();
         deck.shuffleCards();
-        for (int i = 0; i < deck.getCards().size(); i++) {
+        for (int i = 0; i < deck.getCards().length; i++) {
             if (i % 2 == 0) {
-                player1.addCard(deck.getCards().get(i));
+                player1.addCard(deck.getCards()[i]);
             } else {
-                player2.addCard(deck.getCards().get(i));
+                player2.addCard(deck.getCards()[i]);
             }
         }
     }
-    
-    public void roundTie(List<Card> cards) {
+
+    public void roundTie(Card[] cards) {
         Card p1 = player1.drawCard();
         Card p2 = player2.drawCard();
-        cards.add(p1);
-        cards.add(p2);
+
+        Card[] temp = new Card[cards.length + 2];
+
+        int i = 0;
+        for (Card card : cards) {
+            temp[i] = cards[i];
+            i++;
+        }
+
+        temp[i] = p1;
+        i++;
+        temp[i] = p2;
+
+        cards = temp;
+
         System.out.println(player1.getName() + ": " + p1.getCardInfo());
         System.out.println(player2.getName() + ": " + p2.getCardInfo());
-        
+
         if (compareTo(p1, p2) == 1) {
             player1.wonRound(cards);
         } else if (compareTo(p1, p2) == -1) {
@@ -147,11 +167,10 @@ public class GameLogic {
             roundTie(cards);
         }
     }
-    
-    public List<Card> roundWinner(Card card1, Card card2) {
-        List<Card> wonCards = new ArrayList();
-        wonCards.add(card1);
-        wonCards.add(card2);
+
+    public void roundWinner(Card card1, Card card2) {
+        Card[] wonCards = {card1, card2};
+
         if (compareTo(card1, card2) == 1) {
             player1.wonRound(wonCards);
         } else if (compareTo(card1, card2) == -1) {
@@ -160,7 +179,5 @@ public class GameLogic {
             System.out.println("It's a tie!");
             roundTie(wonCards);
         }
-
-        return null;
     }
 }
